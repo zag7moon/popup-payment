@@ -1,0 +1,49 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/roboto_black/roboto_black.eot');
+    src: url('../fonts/roboto/roboto_black/roboto_black.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/roboto_black/roboto_black.woff') format('woff'),
+         url('../fonts/roboto/roboto_black/roboto_black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/roboto_bold/roboto_bold.eot');
+    src: url('../fonts/roboto/roboto_bold/roboto_bold.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/roboto_bold/roboto_bold.woff') format('woff'),
+         url('../fonts/roboto/roboto_bold/roboto_bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/roboto_medium/roboto_medium.eot');
+    src: url('../fonts/roboto/roboto_medium/roboto_medium.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/roboto_medium/roboto_medium.woff') format('woff'),
+         url('../fonts/roboto/roboto_medium/roboto_medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/roboto_regular/roboto_regular.eot');
+    src: url('../fonts/roboto/roboto_regular/roboto_regular.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/roboto_regular/roboto_regular.woff') format('woff'),
+         url('../fonts/roboto/roboto_regular/roboto_regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../fonts/roboto/roboto_light/roboto_light.eot');
+    src: url('../fonts/roboto/roboto_light/roboto_light.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/roboto_light/roboto_light.woff') format('woff'),
+         url('../fonts/roboto/roboto_light/roboto_light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
