@@ -30,7 +30,7 @@ const currency = {
 //
 // Insert 'Checkout' button near script tag
 //
-$(me.parentElement).append(`<button id="checkout-btn" onclick="showPopup()">Checkout</button>`)
+me.parentElement.innerHTML += `<button id="checkout-btn" onclick="showPopup()">Checkout</button>`
 
 
 const showPopup = () => {
@@ -49,7 +49,7 @@ const hidePopup = () => {
 //
 // Insert 'Checkout-Popup' to page body
 //
-$('body').append(`
+document.body.innerHTML += `
   <div id="popup-container" class="popup-container">
     <div id="popup" class="popup clearfix">
       <div class="popup-close" onclick="hidePopup()"></div>
@@ -71,7 +71,7 @@ $('body').append(`
       <div class="popup__right">
         <div class="popup__right-one js-tabs-wrap">
           <div class="popup__right-content-wrapp clearfix">
-            <div class="popup__right-content js-tab-content active">
+            <div class="popup__right-content js-tab-content-btc active">
               <span class="popup__right-caption">Pay in Bitcoin</span>
               <span class="popup__right-text">
               Send exactly <span class="popup__right-total-btc blue"></span> to the address below.
@@ -86,7 +86,7 @@ $('body').append(`
                 <img src="img/qr.png" alt="">
               </div>
             </div>
-            <div class="popup__right-content js-tab-content">
+            <div class="popup__right-content js-tab-content-eth">
               <span class="popup__right-caption">Pay in Ethereum</span>
               <span class="popup__right-text">
               Send exactly <span class="popup__right-total-eth blue"></span> to the address below. Rate will expire in 00:24
@@ -106,10 +106,10 @@ $('body').append(`
             <div class="popup__right-currency">
               <span class="popup__right-text-pay">Pay in</span>
               <div class="popup__right-tab-wrapp">
-                <span class="popup__right-tab js-tab active">
+                <span class="popup__right-tab js-tab-btc active">
                 BTC
                 </span>
-                <span class="popup__right-tab js-tab">ETH</span>
+                <span class="popup__right-tab js-tab-eth">ETH</span>
               </div>
             </div>
             <div class="popup__right-btn-wrapp">
@@ -160,71 +160,61 @@ $('body').append(`
       </div>
     </div>
   </div>
-`)
+`
 
 
 //
 // Handle content change on right side of popup based on btc/eth
 //
-function tabs() {
-  var $wrap = $('.js-tabs-wrap');
+document.querySelector('.js-tab-btc').onclick = () => {
+  document.querySelector('.js-tab-btc').classList.add('active')
+  document.querySelector('.js-tab-eth').classList.remove('active')
 
-  if ($wrap.length) {
-    $wrap.each(function () {
-      var $that = $(this),
-      $tab = $that.find('.js-tab'),
-      $content = $that.find('.js-tab-content');
-      $tab.on('click touchstart', function (e) {
-        e.preventDefault();
-        var self = $(this),
-        index = self.index();
-        self.addClass('active').siblings().removeClass('active');
-        $content.eq(index).addClass('active').siblings().removeClass('active');
-        if(index == 0) {
-          $(".popup__goods-price-btc").addClass("active");
-          $(".popup__goods-price-eth").removeClass("active");
-          pay.currency = "BTC";
-          pay.code = btc_code;
-          $(".pay_count").html(pay.count.btc);
-        } else {
-          $(".popup__goods-price-eth").addClass("active");
-          $(".popup__goods-price-btc").removeClass("active");
-          pay.currency = "ETH";
-          pay.code = eth_code;
-          $(".pay_count").html(pay.count.eth);
-        }
-        $(".pay_code").html(pay.code);
-        $(".pay_currency").html(pay.currency);
-      });
-    });
-  }
+  document.querySelector('.js-tab-content-btc').classList.add('active')
+  document.querySelector('.js-tab-content-eth').classList.remove('active')
+
+  document.querySelectorAll('.popup__goods-price-btc').forEach(item => item.classList.add('active'))
+  document.querySelectorAll('.popup__goods-price-eth').forEach(item => item.classList.remove('active'))
+  pay.currency = "BTC";
+  pay.code = btc_code;
+  document.querySelector('.pay_count').innerHTML = pay.count.btc;
+
+  document.querySelector('.pay_code').innerHTML = pay.code;
+  document.querySelector('.pay_currency').innerHTML = pay.currency;
 }
 
-tabs();
+document.querySelector('.js-tab-eth').onclick = () => {
+  document.querySelector('.js-tab-btc').classList.remove('active')
+  document.querySelector('.js-tab-eth').classList.add('active')
+
+  document.querySelector('.js-tab-content-btc').classList.remove('active')
+  document.querySelector('.js-tab-content-eth').classList.add('active')
+
+  document.querySelectorAll('.popup__goods-price-btc').forEach(item => item.classList.remove('active'))
+  document.querySelectorAll('.popup__goods-price-eth').forEach(item => item.classList.add('active'))
+  pay.currency = "ETH";
+  pay.code = eth_code;
+  document.querySelector('.pay_count').innerHTML = pay.count.eth;
+
+  document.querySelector('.pay_code').innerHTML = pay.code;
+  document.querySelector('.pay_currency').innerHTML = pay.currency;
+}
 
 //
 // Handle content change on rigth side of popup based on requested content
 //
-function windowChange() {
-  $('.js-window-two').on('click touchstart', function() {
-    $('.js-two').addClass('active');
-    $('.js-three').removeClass('active');
-  })
-  $('.js-back-window-one').on('click touchstart', function() {
-    $('.js-two').removeClass('active');
-  })
 
-  $('.js-window-three').on('click touchstart', function() {
-    $('.js-three').addClass('active');
-  })
+document.querySelector('.js-window-two').addEventListener('click', () => {
+  document.querySelector('.js-two').classList.add('active');
+  document.querySelector('.js-three').classList.remove('active');
+})
+document.querySelector('.js-back-window-one').addEventListener('click', () => {
+  document.querySelector('.js-two').classList.remove('active');
+})
 
-  $('.fancybox-close-small').on('click touchstart', function() {
-    $('.js-two').removeClass('active');
-    $('.js-three').removeClass('active');
-  })
-}
-
-windowChange();
+document.querySelector('.js-window-three').addEventListener('click', () => {
+  document.querySelector('.js-three').classList.add('active');
+})
 
 //
 // Copy address to clipboard on 'copy' button click
