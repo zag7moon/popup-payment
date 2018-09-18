@@ -154,7 +154,7 @@ document.body.innerHTML += `
             <a href="track.html" class="popup__right-link-center">payment tracking</a>
           </div>
           <div class="popup__right-continue">
-            <button data-fancybox-close onclick="$('.js-three').removeClass('active');" class="popup__right-continue-btn" >Continue shopping</button>
+            <button data-fancybox-close onclick="document.querySelector('.js-three').classList.remove('active');" class="popup__right-continue-btn" >Continue shopping</button>
           </div>
         </div>
       </div>
@@ -219,27 +219,28 @@ document.querySelector('.js-window-three').addEventListener('click', () => {
 //
 // Copy address to clipboard on 'copy' button click
 //
-$(document).on('click', '.popup__right-copy', (link) => {
-  let address = $(link.target).parents('.popup__right-content').find('.popup__right-address')[0];
-  $(address).select();
+document.querySelectorAll('.popup__right-copy').forEach(el => el.addEventListener('click', (event) => {
+  const address = event.target.parentNode.parentNode.querySelector('input.popup__right-address')
+  console.log(event)
+  address.select();
   document.execCommand('copy');
   if (document.selection) {
     document.selection.empty();
   } else if (window.getSelection) {
     window.getSelection().removeAllRanges();
   }
-});
+}))
 
 //
 // Initialize values
 //
 let timeout = 86400;
-$("#checkout-btn").on("click", () => {
+document.querySelector('#checkout-btn').addEventListener('click', () => {
   pay.currency = "BTC";
   pay.code = btc_code;
-  $(".pay_count").html(pay.count.btc);
-  $(".pay_code").html("BTC");
-  $(".pay_currency").html(btc_code);
+  document.querySelector('.pay_count').innerHTML = pay.count.btc;
+  document.querySelector('.pay_code').innerHTML = "BTC";
+  document.querySelector('.pay_currency').innerHTML = btc_code;
   timeout = 86400;
 });
 setInterval(()=>{
@@ -247,7 +248,7 @@ setInterval(()=>{
   let h = Math.floor(timeout / 3600);
   let m = Math.floor((timeout - h * 3600) / 60);
   let s = Math.floor(timeout - h * 3600 - m * 60);
-  $(".popup_right-timeout").html(`${h}:${m}:${s}`);
+  document.querySelector('.popup_right-timeout').innerHTML = `${h}:${m}:${s}`;
 }, 1000);
 
 
@@ -259,7 +260,7 @@ const usd2eth = (eth, count) => {
   return Math.round(eth * currency.eth * count * 1000000) / 1000000;
 };
 
-$(".popup__goods").html("");
+document.querySelector('.popup__goods').innerHTML = '';
 
 const total = {
   usd: 0,
@@ -268,7 +269,7 @@ const total = {
 };
 
 orderItems.forEach((item) => {
-  $(`<div class="popup__goods-item clearfix">
+  document.querySelector('.popup__goods').innerHTML += `<div class="popup__goods-item clearfix">
     <span class="popup__goods-name">${item.count} x ${item.title}</span>
     <div class="popup__goods-left">
       <span class="popup__goods-descr">${item.description}</span>
@@ -278,7 +279,7 @@ orderItems.forEach((item) => {
       <span class="popup__goods-price-btc active">BTC ${usd2btc(item.price, item.count)}</span>
       <span class="popup__goods-price-eth">ETH ${usd2eth(item.price, item.count)}</span>
     </div>
-  </div>`).appendTo(".popup__goods");
+  </div>`
   total.usd += item.price * item.count;
   total.btc += usd2btc(item.price, item.count);
   total.eth += usd2eth(item.price, item.count);
@@ -286,6 +287,6 @@ orderItems.forEach((item) => {
 pay.count.btc = total.btc;
 pay.count.eth = total.eth;
 
-$(".popup__right-total-btc").html(total.btc);
-$(".popup__right-total-eth").html(total.eth);
-$(".popup__order-price").html("$" + total.usd);
+document.querySelector('.popup__right-total-btc').innerHTML = total.btc;
+document.querySelector('.popup__right-total-eth').innerHTML = total.eth;
+document.querySelector('.popup__order-price').innerHTML = '$' + total.usd;
